@@ -1,0 +1,10 @@
+<!-- nav-bar.component.html -->
+<nav [ngClass]="{ 'dark-mode': darkMode$ | async }">
+    <p>Herolro Weather</p>
+    <div>
+      <button (click)="NavigateHome()">Home</button>
+      <button (click)="NavigateFavorits()">Favorits</button>
+      <button (click)="toggleDarkMode()">Toggle Dark Mode</button>
+    </div>
+  </nav>
+  

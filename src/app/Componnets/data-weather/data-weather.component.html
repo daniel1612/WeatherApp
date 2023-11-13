@@ -1,0 +1,34 @@
+<div class="weather-container">
+  <div class="card">
+    <div class="header">
+      <span class="exit-button">X</span>
+      <button
+        class="favorite-button"
+        [class.active]="isFavorite"
+        (click)="toggleFavorite()"
+      >
+        &#10084;
+      </button>
+
+      <span class="favorite-text">Add to Favorites</span>
+    </div>
+    <span class="city">{{ city }}</span>
+
+    <span class="weather-degree"
+      >{{ mockWeatherData.TemperatureC?.Value }} C</span
+    ><br />
+
+    <p class="weather-text">{{ mockWeatherData.WeatherText }}</p>
+    <div class="weather-card">
+      <app-card-weather *ngFor="let day of mockTransformedData">
+        <h4 class="mb-1 sfw-normal">{{ day.Date | dateFormat }}</h4>
+        <p>Min: {{ day.TemperaturMin }}°C</p>
+        <p>Max: {{ day.TemperaturMax }}°C</p>
+
+        <div class="d-flex flex-row align-items-center">
+          <i class="fas fa-cloud fa-3x" style="color: #eee"></i>
+        </div>
+      </app-card-weather>
+    </div>
+  </div>
+</div>
