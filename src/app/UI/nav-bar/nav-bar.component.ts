@@ -18,7 +18,6 @@ export class NavBarComponent implements OnInit {
   }
 
   NavigateHome() {
-    console.log("daa");
     this.router.navigate(['/HomePage']);
   }
 

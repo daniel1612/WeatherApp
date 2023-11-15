@@ -24,12 +24,9 @@ export class WeatherService {
     if (split.length === 1) {
       city = split[0];
     } else {
-      console.log(split);
       city = split[0] + '%20' + split[1];
-      console.log(city);
     }
 
-    console.log("keyOfCity:",`${this.urlLocation}${this.apiKey}&q=${city}${this.language}`);
     
     return this.http.get(`${this.urlLocation}${this.apiKey}&q=${city}${this.language}`)
 
@@ -37,10 +34,10 @@ export class WeatherService {
 
 
   getDataCity(keyCity: string): Observable<any> {
-    console.log(keyCity);
+    console.log('keyCity:',keyCity);
     keyCity = keyCity + '?apikey=';
     const url = `${this.urlCurrent}${keyCity}${this.apiKey}${this.language}`;
-    console.log(`${this.urlCurrent}${keyCity}${this.apiKey}${this.language}`);
+    console.log("url:",`${this.urlCurrent}${keyCity}${this.apiKey}${this.language}`);
 
     return this.http.get(url);
   }
@@ -50,7 +47,7 @@ export class WeatherService {
     console.log(keyCity);
     keyCity = keyCity + '?apikey=';
     const url = `${this.urlFive}${keyCity}${this.apiKey}${this.language}`;
-    console.log(`${this.urlFive}${keyCity}${this.apiKey}${this.language}`);
+    console.log("url 5:",`${this.urlFive}${keyCity}${this.apiKey}${this.language}`);
 
     return this.http.get(url);
 

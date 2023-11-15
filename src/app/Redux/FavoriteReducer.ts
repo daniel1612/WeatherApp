@@ -5,22 +5,16 @@ export interface FavoriteState {
   isFavoriteCities: { [city: string]: boolean };
 }
 
-export const FavoriteReducer = (state: FavoriteState = { favorits: [], isFavoriteCities: { "Tel Aviv": false } }, action: any) => {
-  console.log("payload:", action.payload);
-
+export const FavoriteReducer = (state: FavoriteState = { favorits: [], isFavoriteCities: {} }, action: any) => {
   switch (action.type) {
+    
     case 'addFavorite':
       let isExist = state.favorits.some(fav => fav.name === action.payload.name);
-      console.log("Name", action.payload.name);
-
-      if (isExist) {
-        console.log("isExist ");
-        return { ...state };
-      }
+      if (isExist) return { ...state };
       return { ...state, favorits: [...state.favorits, action.payload], isFavoriteCities: { ...state.isFavoriteCities, [action.payload.name]: true } };
     
     case 'removeFavorite':
-      return { ...state, favorits: state.favorits.filter(fav => fav.name !== action.payload.name) };
+      return { ...state, favorits: state.favorits.filter(fav => fav.name !== action.payload.name), isFavoriteCities: { ...state.isFavoriteCities, [action.payload.name]: false  } };    
 
     default:
       return state;

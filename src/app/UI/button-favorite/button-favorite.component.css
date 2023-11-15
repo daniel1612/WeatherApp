@@ -1,0 +1,50 @@
+.favorite-button {
+    background:  white;
+    position: absolute;
+    right: 128px;
+    top: -3px;
+    font-size: 24px;
+    cursor: pointer;
+    color: black; 
+    border-radius: 50%; 
+    outline: none;
+    transition: color 0.3s ease;
+    border: none;
+
+  
+    &:hover {
+      color: #c0392b;
+    }
+  
+    &:active {
+      transform: scale(1.2); 
+    }
+  }
+  
+  .favorite-button.active {
+    color: #e74c3c; 
+  }
+
+
+  
+  .favorite-comp{
+    position: absolute;
+    top: 0; 
+    right: 10px;
+    font-size: 24px;
+    background: white;
+    cursor: pointer;
+    border-radius: 50%; 
+    outline: none;
+    transition: color 0.3s ease;
+    border: none;
+    
+    &:hover {
+      color: #c0392b;
+    }
+  }
+
+
+  .favorite-comp.active {
+    color: #e74c3c; 
+  }

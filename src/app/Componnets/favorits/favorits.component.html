@@ -1,19 +1,27 @@
-<br>
-<h1 style="text-align: center;" *ngIf="(favorites | async)?.length === 0">You don't have Favorites!</h1>
-<div class="favorite" *ngFor="let favorite of favorites | async">
+<br />
+<h1 style="text-align: center" *ngIf="(favorites | async)?.length === 0">
+  You don't have Favorites!
+</h1>
+<div *ngFor="let favorite of favorites | async">
   <div (click)="cityCard(favorite)" class="favorite-card">
-  <app-card-weather>
-    <p>
-      {{ favorite?.name }}
-    </p>
-    <p>{{ favorite?.TemperatureC?.Value }}°C</p>
-    <p>
-      {{ favorite?.WeatherText }}
-    </p>
+    <app-card-weather>
+      <app-button-favorite 
+      [city]="favorite.name"
+      [WeatherCurrent]="favorite"
+      [isFavoriteComp]="true">
+    </app-button-favorite>
 
-    <div class="d-flex flex-row align-items-center">
-      <i class="fas fa-cloud fa-3x" style="color: #eee"></i>
-    </div>
-  </app-card-weather>
-</div>
+      <p>
+        {{ favorite?.name }}
+      </p>
+      <p>{{ favorite?.TemperatureC?.Value }}°C</p>
+      <p>
+        {{ favorite?.WeatherText }}
+      </p>
+
+      <div class="d-flex flex-row align-items-center">
+        <i class="fas fa-cloud fa-3x" style="color: #eee"></i>
+      </div>
+    </app-card-weather>
+  </div>
 </div>

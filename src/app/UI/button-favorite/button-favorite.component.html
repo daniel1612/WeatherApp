@@ -1,0 +1,15 @@
+<button
+  [class.favorite-comp]="isFavoriteComp"
+  [class.favorite-button]="!isFavoriteComp"
+  [class.active]="isFavorite"
+  (click)="toggleFavorite()"
+>
+&#10084;
+</button>
+<!-- <button
+class="favorite-button"
+[class.active]="isFavorite"
+  (click)="toggleFavorite()"
+>
+  &#10084;
+</button> -->

@@ -1,6 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { FavoriteState } from 'src/app/Redux/FavoriteReducer';
+import { Observable } from 'rxjs';
+import { WeatherState } from 'src/app/Redux/WeatherReducer';
 import { WeatherService } from 'src/app/Services/weather.service';
 import { CurrentWeather } from 'src/app/Types/current-weather';
 
@@ -13,16 +14,15 @@ import { CurrentWeather } from 'src/app/Types/current-weather';
 })
 export class DataWeatherComponent {
 
-  constructor(private service: WeatherService, private store: Store<FavoriteState>) { }
-
- 
-
-  isFavoriteCities: { [city: string]: boolean } = {};
+  isFavoriteCities!: Observable<any>;
+  constructor(private service: WeatherService, private store: Store <{weatherData: WeatherState}>) { }
   isFavorite: boolean = false;
 
 
   keyCity: string = ""
-  WeatherCurrent: CurrentWeather = new CurrentWeather("", "", {}, {});
+  // WeatherCurrent: CurrentWeather = new CurrentWeather("", "", {}, {});
+  
+  WeatherCurrent!: Observable<CurrentWeather>;
   days: any[] = [];
   mockTransformedData = [
     {
@@ -64,40 +64,54 @@ export class DataWeatherComponent {
   );
 
 
-  checkCity() {
-    this.isFavoriteCities = JSON.parse(localStorage.getItem('cityDict') || '{}');
-  
-    if (this.city in this.isFavoriteCities) {
-      console.log("check1");
-      
-      this.isFavorite = this.isFavoriteCities[this.city];
-    } else {
-      console.log("check2");
-      this.isFavorite = false;
-      this.isFavoriteCities[this.city] = false;
-      localStorage.setItem('cityDict', JSON.stringify(this.isFavoriteCities));
+  // checkCity() {
+  //   this.isFavoriteCities = JSON.parse(localStorage.getItem('cityDict') || '{}');
 
-    }
-  }
+  //   if (this.city in this.isFavoriteCities) {
+  //     console.log("check1");
 
-  toggleFavorite() {
-    // this.checkCity();
-  
-    if (!this.isFavorite) {
-      this.isFavorite = true;
-      // this.isFavoriteCities[this.city] = true;
-      this.store.dispatch({
-        type: 'addFavorite',
-        payload: this.mockWeatherData
-      });
-    } else {
-      this.isFavorite = false;
-      // this.isFavoriteCities[this.city] = false;
-      this.store.dispatch({ type: 'removeFavorite', payload: { name: this.city } });
-    }
-  
-    // localStorage.setItem('cityDict', JSON.stringify(this.isFavoriteCities));
-  }
+  //     // this.isFavorite = this.isFavoriteCities[this.city];
+  //   } else {
+  //     console.log("check2");
+  //     this.isFavorite = false;
+  //     // this.isFavoriteCities[this.city] = false;
+  //     localStorage.setItem('cityDict', JSON.stringify(this.isFavoriteCities));
+
+  //   }
+  // }
+
+
+  // checkCity() {
+  //   this.isFavoriteCities = this.store.select(data => data.favoriteReducer.isFavoriteCities)
+
+  //   this.isFavoriteCities.subscribe((data: any) => {
+  //     console.log(data);
+  //     this.isFavorite = data[this.city] === true;
+
+  //     console.log("isFav1:", this.isFavorite);
+  //   })
+
+
+  //   console.log("isFav2:", this.isFavorite);
+  // }
+
+
+
+
+  // toggleFavorite() {
+  //   this.checkCity();
+  //   if (!this.isFavorite) {
+  //     this.isFavorite = true;
+  //     this.store.dispatch({
+  //       type: 'addFavorite',
+  //       payload: this.WeatherCurrent
+  //     });
+  //   } else {
+  //     this.isFavorite = false;
+  //     console.log("remove favorite");
+  //     this.store.dispatch({ type: 'removeFavorite', payload: { name: this.city } });
+  //   }
+  // }
 
 
 
@@ -110,7 +124,6 @@ export class DataWeatherComponent {
             TemperaturMin: item.Temperature.Minimum.Value,
             TemperaturMax: item.Temperature.Maximum.Value
           }));
-          console.log("Transformed Data", this.days);
         } else {
           console.error("Error fetching five-day weather data:");
           alert('Error fetching five-day weather data');
@@ -125,16 +138,19 @@ export class DataWeatherComponent {
 
   getCurrentData(): void {
     this.service.getDataCity(this.keyCity).subscribe((weatherData: any) => {
-      this.WeatherCurrent = new CurrentWeather(this.city, weatherData[0]?.WeatherText, weatherData[0]?.Temperature.Metric, weatherData[0]?.Temperature.Imperial);
+      this.store.dispatch({type: 'GetDataWeather',payload: new CurrentWeather(this.city, weatherData[0]?.WeatherText, weatherData[0]?.Temperature.Metric, weatherData[0]?.Temperature.Imperial)})
+      // this.WeatherCurrent = new CurrentWeather(this.city, weatherData[0]?.WeatherText, weatherData[0]?.Temperature.Metric, weatherData[0]?.Temperature.Imperial);
     });
+
+    this.WeatherCurrent = this.store.select(data => data.weatherData.WeatherData)
 
   }
 
 
   getCityData(): void {
     this.service.getKeyOfCity(this.city).subscribe((data: any) => {
-      console.log("getCityData",data);
-      
+      console.log("getCityData", data);
+
       const firstItem = data[0];
       if (firstItem) {
         this.keyCity = firstItem.Key;
@@ -142,7 +158,7 @@ export class DataWeatherComponent {
         this.getCurrentData();
         this.getFiveDays()
       } else {
-        this.WeatherCurrent = new CurrentWeather(this.city, "No Data Availibale", {}, {});
+        // this.WeatherCurrent = new CurrentWeather(this.city, "No Data Availibale", {}, {});
       }
     });
 
@@ -153,20 +169,19 @@ export class DataWeatherComponent {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['city'] && !changes['city'].firstChange) {
-      // Check if 'city' has changed and it's not the initial change
-      // this.getCityData();
-      
+    // if (changes['city'] && !changes['city'].firstChange) {
+    if (changes['city']) {
+      this.getCityData();
+
     }
-    // this.checkCity()
   }
-  
-  
-  
+
+
+
   ngOnInit(): void {
-    // this.checkCity();
     // this.getCityData();
-    
+
+
   }
 
 }

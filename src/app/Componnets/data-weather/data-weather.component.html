@@ -1,24 +1,23 @@
+
 <div class="weather-container">
   <div class="card">
     <div class="header">
       <span class="exit-button">X</span>
-      <button
-        class="favorite-button"
-        [class.active]="isFavorite"
-        (click)="toggleFavorite()"
-      >
-        &#10084;
-      </button>
+
+      <app-button-favorite [city]="city" [WeatherCurrent]="WeatherCurrent | async"></app-button-favorite>
+      <!-- <app-button-favorite [city]="city" [WeatherCurrent] = "WeatherCurrent"></app-button-favorite> -->
 
       <span class="favorite-text">Add to Favorites</span>
     </div>
     <span class="city">{{ city }}</span>
 
-    <span class="weather-degree"
-      >{{ mockWeatherData.TemperatureC?.Value }} C</span
-    ><br />
+    <span class="weather-degree">
+      {{ (WeatherCurrent | async)?.TemperatureC?.Value }} C
+      <!-- {{ mockWeatherData.TemperatureC?.Value }} C -->
+    </span><br />
 
-    <p class="weather-text">{{ mockWeatherData.WeatherText }}</p>
+    <p class="weather-text">{{ (WeatherCurrent | async)?.WeatherText }}</p>
+    <!-- <p class="weather-text">{{ mockWeatherData.WeatherText }}</p> -->
     <div class="weather-card">
       <app-card-weather *ngFor="let day of mockTransformedData">
         <h4 class="mb-1 sfw-normal">{{ day.Date | dateFormat }}</h4>

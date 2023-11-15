@@ -14,6 +14,8 @@ import { CardWeatherComponent } from './Componnets/card-weather/card-weather.com
 import { StoreModule } from '@ngrx/store';
 import {FavoriteReducer} from "./Redux/FavoriteReducer";
 import { DateFormatPipe } from './Pipe/date-format-pipe.pipe';
+import { ButtonFavoriteComponent } from './UI/button-favorite/button-favorite.component';
+import { WeatherReducer } from './Redux/WeatherReducer';
 
 const appRoute : Routes = [
   {path:"",component: HomePageComponent, children: [
@@ -32,13 +34,14 @@ const appRoute : Routes = [
     DataWeatherComponent,
     CardWeatherComponent,
     DateFormatPipe,
+    ButtonFavoriteComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoute),
     BrowserAnimationsModule,
     HttpClientModule,
-    StoreModule.forRoot({favoriteReducer:FavoriteReducer}),
+    StoreModule.forRoot({favoriteReducer:FavoriteReducer, weatherData : WeatherReducer}),
   ],
   providers: [],
   bootstrap: [AppComponent]
