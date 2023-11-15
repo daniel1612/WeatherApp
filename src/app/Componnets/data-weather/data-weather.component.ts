@@ -81,22 +81,22 @@ export class DataWeatherComponent {
   }
 
   toggleFavorite() {
-    this.checkCity();
+    // this.checkCity();
   
     if (!this.isFavorite) {
       this.isFavorite = true;
-      this.isFavoriteCities[this.city] = true;
+      // this.isFavoriteCities[this.city] = true;
       this.store.dispatch({
         type: 'addFavorite',
         payload: this.mockWeatherData
       });
     } else {
       this.isFavorite = false;
-      this.isFavoriteCities[this.city] = false;
+      // this.isFavoriteCities[this.city] = false;
       this.store.dispatch({ type: 'removeFavorite', payload: { name: this.city } });
     }
   
-    localStorage.setItem('cityDict', JSON.stringify(this.isFavoriteCities));
+    // localStorage.setItem('cityDict', JSON.stringify(this.isFavoriteCities));
   }
 
 
@@ -158,14 +158,13 @@ export class DataWeatherComponent {
       // this.getCityData();
       
     }
-    this.checkCity()
+    // this.checkCity()
   }
   
   
   
   ngOnInit(): void {
-    console.log("dd");
-    this.checkCity();
+    // this.checkCity();
     // this.getCityData();
     
   }
