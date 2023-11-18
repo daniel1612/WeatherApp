@@ -2,6 +2,7 @@
 <h1 style="text-align: center" *ngIf="(favorites | async)?.length === 0">
   You don't have Favorites!
 </h1>
+<app-button-degree *ngIf="(favorites | async)!.length > 0"></app-button-degree>
 <div *ngFor="let favorite of favorites | async">
   <div (click)="cityCard(favorite)" class="favorite-card">
     <app-card-weather>
@@ -10,11 +11,11 @@
       [WeatherCurrent]="favorite"
       [isFavoriteComp]="true">
     </app-button-favorite>
-
       <p>
         {{ favorite?.name }}
       </p>
-      <p>{{ favorite?.TemperatureC?.Value }}°C</p>
+      <p *ngIf="degreeMode$ | async">{{ favorite?.TemperatureF?.Value }}°F</p>
+      <p *ngIf="!(degreeMode$ | async)">{{ favorite?.TemperatureC?.Value }}°C</p>
       <p>
         {{ favorite?.WeatherText }}
       </p>

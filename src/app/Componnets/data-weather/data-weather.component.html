@@ -1,28 +1,43 @@
-
+<!-- {{(WeatherCurrent | async)?.name}} -->
+City name :{{city}}
 <div class="weather-container">
   <div class="card">
+    <app-button-degree></app-button-degree>
     <div class="header">
       <span class="exit-button">X</span>
 
-      <app-button-favorite [city]="city" [WeatherCurrent]="WeatherCurrent | async"></app-button-favorite>
+      <app-button-favorite
+        [city]="city"
+        [WeatherCurrent]="WeatherCurrent | async"
+      ></app-button-favorite>
       <!-- <app-button-favorite [city]="city" [WeatherCurrent] = "WeatherCurrent"></app-button-favorite> -->
 
       <span class="favorite-text">Add to Favorites</span>
     </div>
     <span class="city">{{ city }}</span>
 
-    <span class="weather-degree">
-      {{ (WeatherCurrent | async)?.TemperatureC?.Value }} C
-      <!-- {{ mockWeatherData.TemperatureC?.Value }} C -->
-    </span><br />
+    <span *ngIf="degreeMode$ | async" class="weather-degree">
+      {{ (WeatherCurrent | async)?.TemperatureF?.Value }} °F
+    </span>
+    <span *ngIf="!(degreeMode$ | async)" class="weather-degree">
+      {{ (WeatherCurrent | async)?.TemperatureC?.Value }} °C
+    </span>
+    <br />
 
     <p class="weather-text">{{ (WeatherCurrent | async)?.WeatherText }}</p>
     <!-- <p class="weather-text">{{ mockWeatherData.WeatherText }}</p> -->
     <div class="weather-card">
       <app-card-weather *ngFor="let day of mockTransformedData">
         <h4 class="mb-1 sfw-normal">{{ day.Date | dateFormat }}</h4>
-        <p>Min: {{ day.TemperaturMin }}°C</p>
-        <p>Max: {{ day.TemperaturMax }}°C</p>
+        <ng-container *ngIf="!(degreeMode$ | async); else fahrenheitBlock">
+          <p>Min: {{ day.TemperaturMin | convertDegree:true }}°C</p>
+          <p>Max: {{ day.TemperaturMax | convertDegree:true }}°C</p>
+        </ng-container>
+        <ng-template #fahrenheitBlock>
+          <p>Min: {{ day.TemperaturMin }}°F</p>
+          <p>Max: {{ day.TemperaturMax }}°F</p>
+        </ng-template>
+      
 
         <div class="d-flex flex-row align-items-center">
           <i class="fas fa-cloud fa-3x" style="color: #eee"></i>

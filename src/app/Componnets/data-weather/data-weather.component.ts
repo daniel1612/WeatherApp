@@ -1,3 +1,4 @@
+import { DegreeModeService } from './../../Services/degree-mode.service';
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -15,46 +16,49 @@ import { CurrentWeather } from 'src/app/Types/current-weather';
 export class DataWeatherComponent {
 
   isFavoriteCities!: Observable<any>;
-  constructor(private service: WeatherService, private store: Store <{weatherData: WeatherState}>) { }
+  degreeMode$!: Observable<any>;
+  constructor(private service: WeatherService, private store: Store<{ weatherData: WeatherState }>, private degereeModeService: DegreeModeService) { }
   isFavorite: boolean = false;
 
 
   keyCity: string = ""
   // WeatherCurrent: CurrentWeather = new CurrentWeather("", "", {}, {});
-  
+
   WeatherCurrent!: Observable<CurrentWeather>;
   days: any[] = [];
   mockTransformedData = [
     {
       Date: '2023-11-09T07:00:00+02:00',
-      TemperaturMin: 15,
-      TemperaturMax: 25
+      TemperaturMin: 65,
+      TemperaturMax: 73
     },
     {
       Date: '2023-11-10T07:00:00+02:00',
-      TemperaturMin: 14,
-      TemperaturMax: 22
+      TemperaturMin: 66,
+      TemperaturMax: 83
     },
     {
       Date: '2023-11-11T07:00:00+02:00',
-      TemperaturMin: 16,
-      TemperaturMax: 27
+      TemperaturMin: 38,
+      TemperaturMax: 40
     },
     {
       Date: '2023-11-12T07:00:00+02:00',
-      TemperaturMin: 13,
-      TemperaturMax: 20
+      TemperaturMin: 40,
+      TemperaturMax: 50
     },
     {
       Date: '2023-11-13T07:00:00+02:00',
-      TemperaturMin: 17,
-      TemperaturMax: 26
+      TemperaturMin: 60,
+      TemperaturMax: 70
     },
   ];
 
+  cityName!: Observable<any>;
+  city:string ="";
 
-  @Input()
-  city: string = "";
+  // @Input()
+  // city: string = "";
 
   mockWeatherData: CurrentWeather = new CurrentWeather(
     "Tel Aviv", // Provide the city name
@@ -138,7 +142,7 @@ export class DataWeatherComponent {
 
   getCurrentData(): void {
     this.service.getDataCity(this.keyCity).subscribe((weatherData: any) => {
-      this.store.dispatch({type: 'GetDataWeather',payload: new CurrentWeather(this.city, weatherData[0]?.WeatherText, weatherData[0]?.Temperature.Metric, weatherData[0]?.Temperature.Imperial)})
+      this.store.dispatch({ type: 'GetDataWeather', payload: new CurrentWeather(this.city, weatherData[0]?.WeatherText, weatherData[0]?.Temperature.Metric, weatherData[0]?.Temperature.Imperial) })
       // this.WeatherCurrent = new CurrentWeather(this.city, weatherData[0]?.WeatherText, weatherData[0]?.Temperature.Metric, weatherData[0]?.Temperature.Imperial);
     });
 
@@ -149,6 +153,8 @@ export class DataWeatherComponent {
 
   getCityData(): void {
     this.service.getKeyOfCity(this.city).subscribe((data: any) => {
+      console.log('this is the city : ', this.city);
+      
       console.log("getCityData", data);
 
       const firstItem = data[0];
@@ -169,19 +175,27 @@ export class DataWeatherComponent {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if (changes['city'] && !changes['city'].firstChange) {
     if (changes['city']) {
       this.getCityData();
-
     }
   }
 
 
 
   ngOnInit(): void {
-    // this.getCityData();
+    console.log("this is the DataWeather");
+    this.WeatherCurrent = this.store.select(data => data.weatherData.WeatherData);
+    this.degreeMode$ = this.degereeModeService.degreeMode$;
+    this.cityName = this.store.select(data =>  data.weatherData.name)
+    this.cityName.subscribe(data => {
+      console.log("this is the Name City:",data);
+      this.city = data;
+      this.getCityData();
+  })
 
+  // this.getCityData();
 
+    
   }
 
 }

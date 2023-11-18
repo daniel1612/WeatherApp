@@ -16,6 +16,8 @@ import {FavoriteReducer} from "./Redux/FavoriteReducer";
 import { DateFormatPipe } from './Pipe/date-format-pipe.pipe';
 import { ButtonFavoriteComponent } from './UI/button-favorite/button-favorite.component';
 import { WeatherReducer } from './Redux/WeatherReducer';
+import { ButtonDegreeComponent } from './UI/button-degree/button-degree.component';
+import { ConvertDegreePipe } from './Pipe/convert-degree.pipe';
 
 const appRoute : Routes = [
   {path:"",component: HomePageComponent, children: [
@@ -35,6 +37,8 @@ const appRoute : Routes = [
     CardWeatherComponent,
     DateFormatPipe,
     ButtonFavoriteComponent,
+    ButtonDegreeComponent,
+    ConvertDegreePipe,
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,7 @@ export class ButtonFavoriteComponent {
   isFavorite: boolean = false;
   isFavoriteCities!: Observable<any>;
   @Input() city: string = "";
+  //  city: string = "";
   @Input() WeatherCurrent: CurrentWeather | null = null;
   @Input() isFavoriteComp: boolean = false;
 
@@ -34,6 +35,8 @@ export class ButtonFavoriteComponent {
   toggleFavorite() {
     this.checkCityFavorite();
     if (!this.isFavorite) {
+      console.log("daniel", this.WeatherCurrent);
+      
       this.isFavorite = true;
       this.store.dispatch({
         type: 'addFavorite',
@@ -49,15 +52,18 @@ export class ButtonFavoriteComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     // if (changes['city'] && !changes['city'].firstChange) {      
-    if (changes['city']) {      
+    if (changes['city']) {  
+      console.log("-----------uChange!!----------",this.city);
+
       this.checkCityFavorite();
     }
   }
 
   ngOnInit(): void {
-    console.log("button Favorite",this.city);
+    console.log("-----------button Favorite----------",this.city);
+    console.log("Weather:",this.WeatherCurrent);
     // this.checkCityFavorite();
-
+    // this.store.select(data => data.weatherData.name)
     
   }
 

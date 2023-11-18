@@ -5,6 +5,7 @@ import { CurrentWeather } from 'src/app/Types/current-weather';
 import { FavoriteState } from 'src/app/Redux/FavoriteReducer';
 import { Router } from '@angular/router';
 import { WeatherState } from 'src/app/Redux/WeatherReducer';
+import { DegreeModeService } from 'src/app/Services/degree-mode.service';
 
 @Component({
   selector: 'app-favorits',
@@ -13,7 +14,8 @@ import { WeatherState } from 'src/app/Redux/WeatherReducer';
 })
 export class FavoritsComponent {
   favorites!: Observable<CurrentWeather[]>;
-  constructor(private router: Router,private store: Store<{ favoriteReducer: FavoriteState, weatherData: WeatherState }>) { }
+  degreeMode$!: Observable<any>;
+  constructor(private router: Router,private store: Store<{ favoriteReducer: FavoriteState, weatherData: WeatherState }>,private degereeModeService: DegreeModeService) { }
 
   cityCard(favorite: any){
     console.log("its Work favorite", favorite);
@@ -24,6 +26,7 @@ export class FavoritsComponent {
 
   ngOnInit(): void {
     this.favorites = this.store.select(data => data.favoriteReducer.favorits);
+    this.degreeMode$ = this.degereeModeService.degreeMode$;
   }
 
 }
