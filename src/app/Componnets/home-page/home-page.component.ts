@@ -7,13 +7,4 @@ import { Component } from '@angular/core';
 })
 export class HomePageComponent {
 
-  ParentCity: string = "Tel Aviv";
-
-  Search(query: string): void {
-    this.ParentCity = query;
-  }
-
-
-
-
 }

@@ -11,10 +11,6 @@ export class DateFormatPipe implements PipeTransform {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-      // hour: 'numeric',
-      // minute: 'numeric',
-      // second: 'numeric',
-      // timeZoneName: 'short'
     };
     return originalDate.toLocaleDateString('en-US', options);
   }

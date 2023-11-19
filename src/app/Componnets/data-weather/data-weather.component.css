@@ -2,7 +2,7 @@
   display: grid;
   justify-content: center;
   align-items: center;
-  row-gap: 20px; /* Adjust the gap between the cards */
+  row-gap: 20px; 
 }
 
 .card {
@@ -21,54 +21,44 @@
   position: relative;
 }
 
-.exit-button {
-  background: white;
-  font-size: 24px;
-  cursor: pointer;
-}
+
 
 .favorite-button {
   position: absolute;
   right: 130px;
   font-size: 24px;
-  font-size: 24px;
   cursor: pointer;
-  color: black; /* Set the initial color to white */
-  background: #ffffff; /* Set the background to white */
-  border: 2px solid #000000; /* Black border */
-  border-radius: 50%; /* Make it a circle */
-  padding: 8px; /* Add some padding for better spacing */
-  outline: none;
+  color: black; 
+  background: #ffffff; 
+  border: 2px solid #000000; 
+  border-radius: 50%; 
+  padding: 8px; 
   transition: color 0.3s ease;
   border: none;
   outline: none;
-  transition: color 0.3s ease; /* Smooth color transition */
 
-  /* Optional: Add some hover effects */
   &:hover {
-    color: #c0392b; /* Darker red on hover */
+    color: #c0392b; 
   }
 
-  /* Optional: Add some active effects */
   &:active {
-    transform: scale(1.2); /* Scale up on click */
+    transform: scale(1.2); 
   }
 }
 
 .favorite-button.active {
-  color: #e74c3c; /* Red color when active */
+  color: #e74c3c; 
 }
 
 
 
 .favorite-text {
-  /* background: green; */
   font-size: 18px;
-  /* color: #333; */
 }
 
 .weather-card {
   display: flex;
+  column-gap: 5px;
 }
 
 .weather-text {

@@ -7,20 +7,18 @@ export interface WeatherState {
 
 const initialState: WeatherState = {
     WeatherData: new CurrentWeather("", "", {}, {}),
-    name : "Tel Aviv"
+    name: "Tel Aviv"
 }
 
 export const WeatherReducer = (state: WeatherState = initialState, action: any) => {
     switch (action.type) {
         case 'GetDataWeather':
-            console.log("WeatherReducer:", state);
-            
-            return { WeatherData: action.payload, name: action.payload.name};
+            return { WeatherData: action.payload, name: action.payload.name };
 
-        case 'GetCityName' :
-            console.log("GetCityName",{...state, name: action.payload});
-             
-            return {...state, name: action.payload};
+        case 'GetCityName':
+            console.log("GetCityName", { ...state, name: action.payload });
+
+            return { ...state, name: action.payload };
         default:
             return state;
     }

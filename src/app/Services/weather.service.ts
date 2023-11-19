@@ -34,10 +34,8 @@ export class WeatherService {
 
 
   getDataCity(keyCity: string): Observable<any> {
-    console.log('keyCity:',keyCity);
     keyCity = keyCity + '?apikey=';
     const url = `${this.urlCurrent}${keyCity}${this.apiKey}${this.language}`;
-    console.log("url:",`${this.urlCurrent}${keyCity}${this.apiKey}${this.language}`);
 
     return this.http.get(url);
   }

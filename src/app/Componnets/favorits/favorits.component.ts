@@ -18,10 +18,8 @@ export class FavoritsComponent {
   constructor(private router: Router,private store: Store<{ favoriteReducer: FavoriteState, weatherData: WeatherState }>,private degereeModeService: DegreeModeService) { }
 
   cityCard(favorite: any){
-    console.log("its Work favorite", favorite);
     this.store.dispatch({type: "GetDataWeather", payload: favorite})
     this.router.navigate(['/HomePage'])
-    
   }
 
   ngOnInit(): void {

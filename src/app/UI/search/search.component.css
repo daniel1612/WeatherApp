@@ -1,19 +1,18 @@
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 68px;
-    margin: 0;
-  }
-  
-  .centered-input {
-    padding: 10px;
-    font-size: 16px;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 68px;
+  margin: 0;
+}
+
+.centered-input {
+  padding: 10px;
+  font-size: 16px;
+}
+
 #search-logo {
-    width: 40px; /* Adjust the size as needed */
-    height: 40px; /* Adjust the size as needed */
-    margin-right: 8px; /* Adjust the spacing between the input and the logo */
-  }
-  
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+}
