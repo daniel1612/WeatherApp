@@ -92,7 +92,6 @@ export class DataWeatherComponent {
 
 
   initialData(): void {
-    console.log("this is the DataWeather");
     this.WeatherCurrent = this.store.select(data => data.weatherData.WeatherData);
     this.degreeMode$ = this.degereeModeService.degreeMode$;
     this.cityName = this.store.select(data => data.weatherData.name)
