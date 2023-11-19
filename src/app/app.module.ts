@@ -19,7 +19,7 @@ import { ButtonDegreeComponent } from './UI/button-degree/button-degree.componen
 import { ConvertDegreePipe } from './Pipe/convert-degree.pipe';
 
 const appRoute : Routes = [
-  {path:"https://weatherapp1612.netlify.app/",component: HomePageComponent, children: [
+  {path:"",component: HomePageComponent, children: [
     {path:"HomePage",component: HomePageComponent}
   ]},
   {path:"Favorits",component: FavoritsComponent}
@@ -41,7 +41,7 @@ const appRoute : Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoute,  {useHash: true}),
+    RouterModule.forRoot(appRoute),
     BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot({favoriteReducer:FavoriteReducer, weatherData : WeatherReducer}),
