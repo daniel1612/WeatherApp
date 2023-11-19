@@ -19,7 +19,7 @@ import { ButtonDegreeComponent } from './UI/button-degree/button-degree.componen
 import { ConvertDegreePipe } from './Pipe/convert-degree.pipe';
 
 const appRoute : Routes = [
-  {path:"",component: HomePageComponent, children: [
+  {path:"https://weatherapp1612.netlify.app/",component: HomePageComponent, children: [
     {path:"HomePage",component: HomePageComponent}
   ]},
   {path:"Favorits",component: FavoritsComponent}
