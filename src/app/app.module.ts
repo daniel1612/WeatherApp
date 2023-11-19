@@ -41,7 +41,7 @@ const appRoute : Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoute),
+    RouterModule.forRoot(appRoute,  {useHash: true}),
     BrowserAnimationsModule,
     HttpClientModule,
     StoreModule.forRoot({favoriteReducer:FavoriteReducer, weatherData : WeatherReducer}),
